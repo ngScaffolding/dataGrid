@@ -10,9 +10,9 @@
     "@ngscaffolding/inputbuilder": "^1.0.0",
     "@ngx-translate/core": "^13.0.0",
     "primeng": "10.0.2",
-        "ag-grid-angular": "^24.1.0",
-        "ag-grid-community": "^24.1.0",
-        "ag-grid-enterprise": "^24.1.0"
+    "ag-grid-angular": "^24.1.0",
+    "ag-grid-community": "^24.1.0",
+    "ag-grid-enterprise": "^24.1.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
