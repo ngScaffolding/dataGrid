@@ -1,0 +1,13 @@
+<div class="action-container">
+    <div class="p-grid">
+        <p-button *ngFor="let action of actions | actions:false"
+            [disabled]="isDisabled(action)"
+            (click)="clickHandler(action)"
+            class="action-button"
+            styleClass="{{action.colour | buttonColour}}"
+            icon="{{action.icon}}"
+            iconPos="left"
+            label="{{action.title | translate}}"></p-button>
+    </div>
+</div>
+<p-confirmDialog [key]="actionsKey" header="{{'Confirmation' | translate}}" header="Confirmation" appendTo="body" icon="fa ui-icon-warning" width="425"></p-confirmDialog>

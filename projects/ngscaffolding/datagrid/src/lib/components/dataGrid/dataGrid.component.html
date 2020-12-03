@@ -1,0 +1,82 @@
+<p-progressSpinner class="loading-indicator" *ngIf="dataLoading"></p-progressSpinner>
+<div class="flex-container fullHeight">
+    <div *ngIf="!itemDetails?.isDataIsland; else titleOnly" class="flex-headerBar">
+        <div class="p-grid">
+            <div class="p-col">
+                <span class="grid-title">{{ itemDetails?.title | translate }}</span>
+            </div>
+            <div class="p-col">
+                <app-grid-toolbar
+                    [collapsedToolbar]="isWidget"
+                    (refreshClicked)="loadData()"
+                    (filtersClicked)="showHideFilters()"
+                    (columnsClicked)="showHideColumns()"
+                    (exportClicked)="exportData()"
+                    (saveViewClicked)="saveView()"
+                    (resetViewClicked)="resetView()"
+                    (shareViewClicked)="shareView()"
+                    [hideFilters]="hideFiltersButton"
+                    [hideLabels]="hideLabels"
+                ></app-grid-toolbar>
+            </div>
+        </div>
+    </div>
+    <ng-template #titleOnly>
+      <span *ngIf="itemDetails.title" class="grid-title grid-title-widget">{{ itemDetails?.title | translate }}</span>
+    </ng-template>
+
+    <filters-holder
+        class="flex-headerBar"
+        #filtersHolder
+        [hidden]="!showFilters"
+        [filterDefinition]="filters"
+        [filterValues]="filterValues"
+        (valuesUpdated)="onFiltersUpdated($event)"
+    ></filters-holder>
+
+    <div class="flex-fillContent">
+        <ag-grid-angular
+            style="width: 100%; height: 100%;"
+            [className]="gridThemeName"
+            [rowData]="rowData"
+            [columnDefs]="columnDefs"
+            [gridOptions]="gridOptions"
+            (selectionChanged)="onSelectionChanged()"
+            (gridReady)="onGridReady($event)"
+            (rowDataChanged)="onRowDataChanged($event)"
+            (firstDataRendered)="onFirstDataRendered($event)"
+        >
+        </ag-grid-angular>
+    </div>
+
+    <app-actions-holder
+        class="flex-footerBar"
+        #actionsHolder
+        *ngIf="actions && actions.length > 0"
+        (actionClicked)="actionClicked($event, null)"
+        [actionsKey]="itemDetails.title"
+        [actions]="actions"
+        [selectedRows]="selectedRows"
+    ></app-actions-holder>
+</div>
+
+<ngs-input-builder-popup
+    #actionInputPopup
+    [setWidth]="actionInputDefinition?.width"
+    [inputBuilderDefinition]="actionInputDefinition"
+    [inputModel]="actionValues"
+    (okClicked)="actionOkClicked($event)"
+    (cancelCliecked)="actionCancelClicked()"
+></ngs-input-builder-popup>
+
+<p-dialog
+    appendTo="body"
+    [style]="dialogStyle"
+    [(visible)]="popupShown"
+    (onHide)="popupHidden()"
+    [closable]="dialogOptions.closable"
+    [maximizable]="dialogOptions.maximizable"
+    [contentStyle]="{ 'max-height': dialogOptions.height - 80 + 'px', overflow: 'auto' }"
+>
+    <div id="popupContent" #dialog></div>
+</p-dialog>
