@@ -1,6 +1,6 @@
 {
   "name": "@ngscaffolding/datagrid",
-  "version": "0.0.1",
+  "version": "2.0.1",
   "peerDependencies": {
     "@angular/common": "^11.0.3",
     "@angular/core": "^11.0.3",
