@@ -13,6 +13,7 @@ import {
   AuthoriseRoleGuard,
   NgsDatePipe,
   NgsDateTimePipe,
+  ButtonColourPipe,
   ComponentLoaderService,
   VersionsService,
   CoreModule,
@@ -46,6 +47,15 @@ const appRoutes: Routes = [
   },
 ];
 
+const translateModule = TranslateModule.forChild();
+const routerModule = RouterModule.forChild(appRoutes);
+const agGridModule = AgGridModule.withComponents([
+  ButtonCellComponent,
+  HyperlinkCellComponent,
+  GlyphCountComponent,
+]);
+
+// @dynamic
 @NgModule({
   declarations: [
     ActionsHolderComponent,
@@ -72,30 +82,19 @@ const appRoutes: Routes = [
     SplitButtonModule,
     SidebarModule,
     CardModule,
-    TranslateModule.forChild(),
-    AgGridModule.withComponents([
-      ButtonCellComponent,
-      HyperlinkCellComponent,
-      GlyphCountComponent,
-    ]),
-    RouterModule.forChild(appRoutes),
+    agGridModule,
+    translateModule,
+    routerModule
   ],
   providers: [NgsDatePipe, NgsDateTimePipe],
   exports: [DataGridComponent, DataGridHolderComponent],
 })
 export class DatagridModule {
-  static forRoot(): ModuleWithProviders<DatagridModule> {
-    return {
-      ngModule: DatagridModule,
-    };
-  }
-
   constructor(
     injector: Injector,
     componentLoaderService: ComponentLoaderService,
     versions: VersionsService
   ) {
-
     // registering our Angular Component
     const el = createCustomElement(DataGridComponent, { injector });
     customElements.define('ngs-data-grid-widget', el);

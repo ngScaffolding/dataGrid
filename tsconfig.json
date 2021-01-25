@@ -19,7 +19,8 @@
       "@ngscaffolding/datagrid": [
         "dist/ngscaffolding/datagrid/ngscaffolding-datagrid",
         "dist/ngscaffolding/datagrid"
-      ]
+      ],
+      "@angular/*": ["./node_modules/@angular/*"]
     }
   }
 }
